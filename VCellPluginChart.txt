@@ -291,7 +291,7 @@ public class VCellPluginChart extends ContextCommand {
 	    	  int cachekey = Integer.valueOf(theCacheKey);
 //ijTimeSeriesJobResults = vh.getTimeSeries(vars, dataIndexes, 22 as double, 1, 22 as double, false, false, 0/*jobid, if parameter scan can be non-zero*/, theCacheKey as int)
 
-	    	  IJDataList tpd = vcellHelper.getTimeSeries(variable, dataIndexes, gg, 1, gg , false, false, 0, theCacheKey);
+	    	  IJDataList tpd = vcellHelper.getTimeSeries(variable, timePoint, gg, 1, gg , false, false, 0, theCacheKey);
 	    	  double[] data = tpd.ijData[0].getDoubleData();
 	    	  BasicStackDimensions bsd = tpd.ijData[0].stackInfo;
 	    	  System.out.println(bsd.xsize+" "+bsd.ysize);

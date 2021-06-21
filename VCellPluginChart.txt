@@ -258,6 +258,7 @@ public class VCellPluginChart extends ContextCommand {
 */		      
 	      try {
 	    	  String[] var = variable;
+		  int[] timePointIndexes = new int[] {timePoint};
 	    	  String title = "test";
 	    	  String xAxisLabel = "distance";
 	    	  String yAxisLabel = "val";
@@ -305,7 +306,7 @@ public class VCellPluginChart extends ContextCommand {
 			displayProgressBar(false, null, null);
 
 		}
-	      startJProgressThread0("getTimePointData",null);
+	      startJProgressThread0("getTimeSeries",null);
 		}
 	}
 

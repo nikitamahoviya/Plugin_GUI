@@ -50,7 +50,7 @@ import net.imglib2.img.basictypeaccess.array.DoubleArray;
 import net.imglib2.type.numeric.real.DoubleType;
 
 
-
+//refernce
 //(See https://github.com/virtualcell/vcell/tree/master/vcell-imagej-helper/src/main/java/org/vcell/imagej/helper/VCellHelper.java)	
 
 //Demo chart in ImageJ of line-scan values from VCell simulation results	

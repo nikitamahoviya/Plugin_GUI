@@ -23,5 +23,6 @@ https://user-images.githubusercontent.com/43717626/123688922-40cc4e00-d870-11eb-
 
 Whereas in this one, as the user gets started with ImageJ, and clicks on the desired plugin, he gets the warning message, which acts as a reminder that he should make the VCell Service active for proceeding further.
 
-
+### Your Suggestions :)
+Which appearance will prove to be more meaningful that clarifies the purpose of the pop-up warning message of starting the ImageJ Service in VCell.
 

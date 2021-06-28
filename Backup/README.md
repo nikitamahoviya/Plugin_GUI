@@ -2,7 +2,7 @@
 
 
 These snapshots are for depicting the correct timing for the appearance of the warning pop-up message for starting the VCell Service.
-For this testing I have **stopped my VCell serive**
+For this testing I have **stopped my ImageJ service in VCell**
 
 ## LinePlot
 https://user-images.githubusercontent.com/43717626/123688694-f77bfe80-d86f-11eb-8efc-47e77d3d8d44.mp4

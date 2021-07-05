@@ -1,6 +1,6 @@
 ## Testing of Plugin in Various Cases
 
-Refernece: VCellPlugin.java
+Reference: VCellPlugin.java
 
 ### Testing A:
 

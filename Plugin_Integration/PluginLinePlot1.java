@@ -3,10 +3,12 @@
 
 package org.vcell.imagej.plugin;
 
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import org.jfree.chart.ChartFactory;
@@ -73,16 +75,22 @@ public class PluginLinePlot1 extends ContextCommand{
 	@Parameter
 	private String  imageName = "test";
 
-	public static void main(String[] args) {
+	public abstract class ActionListenerPlot implements ActionListener{  
+	public void main(String[] args) {
         // create the ImageJ application context with all available services
         final ImageJ ij = new ImageJ();
         ij.ui().showUI();
 	}
-
-
+	
+	JFrame frame = new JFrame("Chart"); {
+	ImageIcon Image = new ImageIcon("/images/ccam_sm_colorgr.gif");
+	frame.setIconImage(Image.getImage());
+	}
+	
 	@Override
 	public void run() {
-		JFrame frame = new JFrame("Chart");	
+		
+		//frame.addActionListener(new plotType());
 	//	frame.addActionListener(new plotType());
 		
 		try {
@@ -105,7 +113,7 @@ public class PluginLinePlot1 extends ContextCommand{
 			uiService.showDialog(modelType+", "+vCellUser+", "+vCellModel+", "+application+", "+simulation+", null, null\n"+e.getMessage(), "Search failed", MessageType.ERROR_MESSAGE);
 			return;
 		}
-
+	      
     	   IJDataList timePointData = null;
     	  int[] timePointIndexes = new int[1]; // there is 1 timePoint
     	  int theTimePointIndex = 0;
@@ -140,6 +148,12 @@ public class PluginLinePlot1 extends ContextCommand{
 		//frame.addActionListener(new ActionListener() {
 		//	@Override
 		//	public void actionPerformed(ActionEvent e) {		
+		List b = new List();
+		b.addActionListener(new ActionListener());
+		b.addActionListener(this); 
+		frame.add(b);
+		
+		
 	      
 	   	try {
 			//LINE plot of data at 1 timePoint along defined indexes
@@ -219,4 +233,6 @@ public class PluginLinePlot1 extends ContextCommand{
 			return;
 		}		
 	}
+
+	protected abstract List List();
 }

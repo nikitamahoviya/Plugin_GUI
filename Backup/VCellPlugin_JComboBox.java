@@ -685,7 +685,7 @@ public class VCellPlugin extends ContextCommand {
 
 			
 			displayProgressBar(false, "Creating GUI...", "VCell Model Loader", 100,uiService);
-			int response = JOptionPane.showConfirmDialog(VCellPlugin.mainApplicationFrame
+			int response = JOptionPane.showConfirmDialog(VCellPlugin_JComboBox.mainApplicationFrame
 			/* (Component)IJ.getInstance() *//* uiService.getDefaultUI().getApplicationFrame() */, jp,"Select User Model App Sim",JOptionPane.OK_CANCEL_OPTION);
 			if(response != JOptionPane.OK_OPTION) {
 				vcellModelsInput.setValue(module, new VCellSelection(new Exception(CANCELLED)));//return VCellSelection with 'cancel' exception
@@ -920,7 +920,7 @@ public class VCellPlugin extends ContextCommand {
     private static void displayProgressBar(boolean bShow,String message,String title,int progress,UIService uiService) {
     	if(progressDialog == null) {
 			//Frame applicationFrame = VCellPlugin.mainApplicationFrame;//IJ.getInstance();//(Frame)uiService.getDefaultUI().getApplicationFrame();
-			progressDialog = new JDialog(VCellPlugin.mainApplicationFrame,"Checking for VCell Client",false);
+			progressDialog = new JDialog(VCellPlugin_JComboBox.mainApplicationFrame,"Checking for VCell Client",false);
 			progressDialog.addWindowListener(new WindowAdapter() {
 				@Override
 				public void windowClosing(WindowEvent e) {

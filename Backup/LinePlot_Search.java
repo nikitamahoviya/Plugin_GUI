@@ -465,7 +465,140 @@ public class LinePlot_Search extends ContextCommand {
 			uiService.showDialog("LINE PlotGet Data failed\n"+e.getMessage(), MessageType.ERROR_MESSAGE);
 			return;
 		}
+			jp.add(new JLabel("Time Plot at Data Index"));
+			JButton timeplotatdataindexBtn = new JButton("Show...");
+			timeplotatdataindexBtn.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+								   	IJTimeSeriesJobResults timeSeries = null;
+	   	try {
+			IJVarInfos simulationInfo = vcellHelper.getSimulationInfo(theCacheKey);
+			double[] times = simulationInfo.getTimes();
+			
+			timeSeries = vcellHelper.getTimeSeries(new String[] {variable}, new int[] {dataIndexes[0]}, times[0], 1, times[times.length-1], false, false, 0, Integer.parseInt(theCacheKey));
+		} catch (Exception e) {
+			uiService.showDialog("TIME Plot Get Data failed\n"+e.getMessage(), MessageType.ERROR_MESSAGE);
+			return;
+		}
+	   	
+		try {
+			//TIME plot of data at 1 timePoint along defined indexes
+			//Create JFreechart x,y axis arrays for plotting x=data indexes, y=dataPoint values
+			double[][] data = new double[][] {timeSeries.data[0][0],timeSeries.data[0][1]};
 
+
+
+			String title = "TIME Plot at dataIndex="+dataIndexes[0];
+			String xAxisLabel = "time";
+			String yAxisLabel = "val";
+
+			DefaultXYDataset xyDataset = new DefaultXYDataset();
+			xyDataset.addSeries( "data1", data);
+
+
+			JFreeChart chart = ChartFactory.createXYLineChart(title, xAxisLabel, yAxisLabel, xyDataset, PlotOrientation.VERTICAL, false, false, false);
+//		chart.getXYPlot().getDomainAxis().setRange(yAxisRange);//Y
+//		chart.getXYPlot().getRangeAxis().setRange(xAxisRange);//X
+			ChartPanel chartPanel = new ChartPanel(chart);
+
+			JFrame frame = new JFrame("Chart");
+			        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.getContentPane().add(chartPanel);
+			        //Display the window.
+			frame.pack();
+			frame.setVisible(true);
+		} catch (Exception e) {
+			uiService.showDialog("TIME Plot show chart failed\n"+e.getMessage(), MessageType.ERROR_MESSAGE);
+			return;
+		}		
+	}
+						
+			jp.add(new JLabel("Both the Plots"));
+			JButton boththeplotsBtn = new JButton("Show...");
+			boththeplotsBtn.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+								   	try {
+			//LINE plot of data at 1 timePoint along defined indexes
+			//Create JFreechart x,y axis arrays for plotting x=data indexes, y=dataPoint values
+			double[][] data = new double[][] {dataIndexesDouble,chartTheseDataPoints};
+
+
+
+			String title = "LINE Plot at time="+timePoint;
+			String xAxisLabel = "distance";
+			String yAxisLabel = "val";
+
+			DefaultXYDataset xyDataset = new DefaultXYDataset();
+			xyDataset.addSeries( "data1", data);
+
+
+			JFreeChart chart = ChartFactory.createXYLineChart(title, xAxisLabel, yAxisLabel, xyDataset, PlotOrientation.VERTICAL, false, false, false);
+			chart.getXYPlot().getDomainAxis().setRange(xAxisRange);//Y
+			chart.getXYPlot().getRangeAxis().setRange(yAxisRange);//X
+			ChartPanel chartPanel = new ChartPanel(chart);
+
+			JFrame frame = new JFrame("Chart");
+			        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.getContentPane().add(chartPanel);
+			        //Display the window.
+			frame.pack();
+			frame.setVisible(true);
+		} catch (Exception e) {
+			uiService.showDialog("LINE PlotGet Data failed\n"+e.getMessage(), MessageType.ERROR_MESSAGE);
+			return;
+		}
+
+	   	  
+	   	  
+	   	IJTimeSeriesJobResults timeSeries = null;
+	   	try {
+			IJVarInfos simulationInfo = vcellHelper.getSimulationInfo(theCacheKey);
+			double[] times = simulationInfo.getTimes();
+			
+			timeSeries = vcellHelper.getTimeSeries(new String[] {variable}, new int[] {dataIndexes[0]}, times[0], 1, times[times.length-1], false, false, 0, Integer.parseInt(theCacheKey));
+		} catch (Exception e) {
+			uiService.showDialog("TIME Plot Get Data failed\n"+e.getMessage(), MessageType.ERROR_MESSAGE);
+			return;
+		}
+	   	
+		try {
+			//TIME plot of data at 1 timePoint along defined indexes
+			//Create JFreechart x,y axis arrays for plotting x=data indexes, y=dataPoint values
+			double[][] data = new double[][] {timeSeries.data[0][0],timeSeries.data[0][1]};
+
+
+
+			String title = "TIME Plot at dataIndex="+dataIndexes[0];
+			String xAxisLabel = "time";
+			String yAxisLabel = "val";
+
+			DefaultXYDataset xyDataset = new DefaultXYDataset();
+			xyDataset.addSeries( "data1", data);
+
+
+			JFreeChart chart = ChartFactory.createXYLineChart(title, xAxisLabel, yAxisLabel, xyDataset, PlotOrientation.VERTICAL, false, false, false);
+//		chart.getXYPlot().getDomainAxis().setRange(yAxisRange);//Y
+//		chart.getXYPlot().getRangeAxis().setRange(xAxisRange);//X
+			ChartPanel chartPanel = new ChartPanel(chart);
+
+			JFrame frame = new JFrame("Chart");
+			        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.getContentPane().add(chartPanel);
+			        //Display the window.
+			frame.pack();
+			frame.setVisible(true);
+		} catch (Exception e) {
+			uiService.showDialog("TIME Plot show chart failed\n"+e.getMessage(), MessageType.ERROR_MESSAGE);
+			return;
+		}		
+	}
 			
 			if(vcellModelsInput.getDefaultValue() != null) {//If user provided an inital value for VCellSelection var in VCellPlugin
 				final VCellSelection defaultValue = vcellModelsInput.getDefaultValue();

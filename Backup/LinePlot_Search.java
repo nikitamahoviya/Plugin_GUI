@@ -404,11 +404,13 @@ public class LinePlot_Search extends ContextCommand {
 	     	  try {
 	 			timePointData = vcellHelper.getTimePointData(theCacheKey, variable, VARTYPE_POSTPROC.NotPostProcess, timePointIndexes, 0);
 	 		} catch (Exception e) {
-	 			uiService.showDialog(modelType+", "+vCellUser+", "+modelName+", "+application+", \"+simName+\", "+variable+", "+timePoint+"\n"+e.getMessage(), "Get Data failed", MessageType.ERROR_MESSAGE);
+				uiService.showDialog("VCellHelper.ModelType.bm,\"colreeze\",\""+modelName+"\",\""+appName+"\",\""+simName+"\",null,null\n"+e.getMessage(), "GUI setupfailed", MessageType.ERROR_MESSAGE);
 	 			return;
 	 		}
 	     	 double[] theTimePointData = timePointData.ijData[theTimePointIndex].getDoubleData();
 	     	Range xAxisRange = null;
+			int startIndex = 1279;
+			int endIndex = 1321;
 	    	  int[] dataIndexes = new int[endIndex-startIndex+1];
 	 		double[] dataIndexesDouble = new double[dataIndexes.length];// This is just for JFreeChart
 	    	  for(int i=startIndex;i<=endIndex;i++) {
@@ -432,7 +434,38 @@ public class LinePlot_Search extends ContextCommand {
 				public void actionPerformed(ActionEvent e) {
 					new Thread(new Runnable() {
 						@Override
-						
+						public void run() {
+							   	try {
+			//LINE plot of data at 1 timePoint along defined indexes
+			//Create JFreechart x,y axis arrays for plotting x=data indexes, y=dataPoint values
+			double[][] data = new double[][] {dataIndexesDouble,chartTheseDataPoints};
+
+
+
+			String title = "LINE Plot at time="+timePoint;
+			String xAxisLabel = "distance";
+			String yAxisLabel = "val";
+
+			DefaultXYDataset xyDataset = new DefaultXYDataset();
+			xyDataset.addSeries( "data1", data);
+
+
+			JFreeChart chart = ChartFactory.createXYLineChart(title, xAxisLabel, yAxisLabel, xyDataset, PlotOrientation.VERTICAL, false, false, false);
+			chart.getXYPlot().getDomainAxis().setRange(xAxisRange);//Y
+			chart.getXYPlot().getRangeAxis().setRange(yAxisRange);//X
+			ChartPanel chartPanel = new ChartPanel(chart);
+
+			JFrame frame = new JFrame("Chart");
+			        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.getContentPane().add(chartPanel);
+			        //Display the window.
+			frame.pack();
+			frame.setVisible(true);
+		} catch (Exception e) {
+			uiService.showDialog("LINE PlotGet Data failed\n"+e.getMessage(), MessageType.ERROR_MESSAGE);
+			return;
+		}
+
 			
 			if(vcellModelsInput.getDefaultValue() != null) {//If user provided an inital value for VCellSelection var in VCellPlugin
 				final VCellSelection defaultValue = vcellModelsInput.getDefaultValue();

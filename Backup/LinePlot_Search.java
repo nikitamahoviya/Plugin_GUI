@@ -128,15 +128,15 @@ public class LinePlot_Search extends ContextCommand {
 		public String varName;
 		public int timePointIndex;
 		public Exception exception;
-		public VCellSelection(String theCacheKey, String userid,String modelName, String appName, String simname,String varName,int timePointIndex) {
+		public VCellSelection(String theCacheKey, String userid,String modelName, String appName, String simname,String varName,int timePointIndex, int startIndex, int endIndex) {
 			super();
 			this.theCacheKey = theCacheKey;
 			this.userid=userid;
 			this.modelName = modelName;
 			this.appName = appName;
 			this.simname = simname;
-			this.startIndex=startIndex;
-			this.endIndex=endIndex;
+			this.startIndex = startIndex;
+			this.endIndex = endIndex;
 			this.varName = varName;
 			this.timePointIndex = timePointIndex;
 		}
@@ -286,8 +286,8 @@ public class LinePlot_Search extends ContextCommand {
 			
 
 
-			jp.add(new JLabel("Start Index"));
-		//	@SuppressWarnings("unchecked")
+			/*jp.add(new JLabel("Start Index"));
+			@SuppressWarnings("unchecked")
 
 			JComboBox<String> jcbStartIndex = new StyledComboBox<String>(mapModelToApps.get(jcbModelNames.getSelectedItem()).toArray(new String[0]));
 			jcbStartIndex.addActionListener(new ActionListener() {
@@ -299,10 +299,10 @@ public class LinePlot_Search extends ContextCommand {
 						jcbStartIndex.setSelectedIndex(1279);
 					}
 				}});
-			jp.add(jcbStartIndex);
+			jp.add(jcbStartIndex);*/
 
-			jp.add(new JLabel("End Index"));
-		//	@SuppressWarnings("unchecked")
+		/*	jp.add(new JLabel("End Index"));
+			@SuppressWarnings("unchecked")
 			JComboBox<String> jcbEndIndex = new StyledComboBox<String>(mapModelToApps.get(jcbModelNames.getSelectedItem()).toArray(new String[0]));
 			jcbStartIndex.addActionListener(new ActionListener() {
 				@Override
@@ -314,7 +314,7 @@ public class LinePlot_Search extends ContextCommand {
 					}
 				}});
 			jp.add(jcbEndIndex);
-			
+			*/
 			final String[] cacheKeyHolder = new String[1];
 			final IJVarInfos[] ijVarInfosHolder = new IJVarInfos[1];
 			
@@ -870,4 +870,11 @@ public class LinePlot_Search extends ContextCommand {
 			displayProgressBar(false, "displaying Image...", "VCell Model Loader", 100,uiService);
 		}
 	}
-}
+			}
+
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}

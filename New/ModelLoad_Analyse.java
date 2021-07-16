@@ -128,4 +128,172 @@ public class ModelLoad_Analyse extends ContextCommand {
 		
 	}
 
+    //These are for showing the progress in loading the result images after clicking OK on the GUI with the required information
+
+    private JDialog progressDialog = null;
+	private final Dimension dim = new Dimension(200,25); //these dimensions are for showing the loading of Image after clicking over OK on the information on the GUI
+	//@SuppressWarnings("serial")	//omitted a serialVersionUID (not mandatory)
+	private final JProgressBar jProgressBar = new JProgressBar(0,100)  //for showing the percentage of loading
+	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		@Override
+		public Dimension getPreferredSize() {
+			// TODO Auto-generated method stub
+			return dim;
+		}
+		@Override
+		public Dimension getSize(Dimension rv) {
+			// TODO Auto-generated method stub
+			return dim;
+		}
+	};
+
+
+    private void displayProgressBar(boolean bShow,String message,String title) {
+    	if(progressDialog == null) {
+			JFrame applicationFrame = (JFrame)uiService.getDefaultUI().getApplicationFrame();
+
+
+			progressDialog = new JDialog(applicationFrame,"Checking for VCell Client",false);
+			progressDialog.getContentPane().add(jProgressBar);
+			jProgressBar.setStringPainted(true);
+			progressDialog.pack();
+    	}
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				if(!bShow) {
+					progressDialog.setVisible(false);
+					return;
+				}
+				jProgressBar.setValue(0);
+				progressDialog.setTitle(title);
+				jProgressBar.setString(message);
+				progressDialog.setVisible(true);
+			}
+		});
+    }
+
+	//This is for exception handling and pausing the execution of the thread for 50 miliseconds
+    private Hashtable<String,Thread> threadHash = new Hashtable<String,Thread>();
+    private void startJProgressThread0(String lastName,String newName) {
+    	if(lastName != null && threadHash.get(lastName) != null) {
+	    	threadHash.get(lastName).interrupt();
+	    	while(threadHash.get(lastName) != null) {
+	    		try {
+					Thread.sleep(50);	//pauses or stops the execution of current thread for 50 miliseconds
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					break;
+				}
+	    	}
+    	}
+    	if(newName == null) {
+    		return;
+    	}
+    	 
+    	final Thread progressThread = new Thread(new Runnable(){
+			@Override
+			public void run() {
+				final int[] progress = new int[] {1};
+				while(progressDialog.isVisible()) {
+					if(Thread.currentThread().isInterrupted()) {
+						break;
+					}
+//this is an instance of an anonymous implementation of the Runnable interface and passing it to 'invokeLater', which will put it on a queue.
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							jProgressBar.setValue(progress[0]);
+						}});
+					progress[0]++;
+					//and now a try catch exection to pause the thread for certain miliseconds
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						break;
+					}
+				}
+				threadHash.remove(Thread.currentThread().getName());
+			}});
+  //  	setDaemon() method of thread class is used to mark the thread either daemon thread or a user thread. Its life depends on the user threads i.e. when all user threads die, JVM terminates this thread automatically. It must be invoked before the thread is started.    	
+    	threadHash.put(newName, progressThread);
+		progressThread.setName(newName);
+		progressThread.setDaemon(true);//So not block JVM exit
+		progressThread.start();
+    }
+    
+	@Override
+	public void run() {
+//This segment is for checking the activation of VCell		
+		displayProgressBar(true, "Checking listening ports...", "Checking for VCell Client");
+		startJProgressThread0(null,"Check");
+//this does the checking for the status of the VCell Port	
+		//If the VCell Port is active
+      try {
+    	  //Find the port that a separately running VCell client is listening on
+    	  //
+			System.out.println("vcell service port="+vcellHelper.findVCellApiServerPort());
+			//uiService.getDisplayViewer(textDisplay).dispose();
+			displayProgressBar(false, null, null);
+		} 
+    //If the VCell Port is inactive, Exception occurs
+      catch (Exception e) {
+			//e.printStackTrace();
+			displayProgressBar(false, null, null);
+			//uiService.getDisplayViewer(textDisplay).dispose();
+			uiService.showDialog("Activate VCell client ImageJ service\nTools->'Start Fiji (ImageJ) service'\n"+e.getMessage(), "Couldn't contact VCell client", MessageType.ERROR_MESSAGE);
+			return;
+		}
+      
+      
+		displayProgressBar(true, "Searching...", "Searching VCell Models");
+		startJProgressThread0("Check","Search");
+		
+//This segments takes the appropriate values and produces the desired results according to the model and the information realted to it
+		String theCacheKey = null;
+	      VCellHelper.VCellModelSearch vcms = new VCellHelper.VCellModelSearch(VCellHelper.ModelType.bm,vCellUser,vCellModel,application,simulation,null,null);
+	      try {
+			ArrayList<VCellModelSearchResults> vcmsr = vcellHelper.getSearchedModelSimCacheKey(false,vcms,null);
+			if(vcmsr.size() == 0) {
+				throw new Exception("No Results for search found");
+			}
+			theCacheKey = vcmsr.get(0).getCacheKey();
+			System.out.println("theCacheKey="+theCacheKey);
+			displayProgressBar(false, null, null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			uiService.showDialog("VCellHelper.ModelType.bm,vCellUser,vCellModel,application,simulation,null,null\n"+e.getMessage(), "Search failed", MessageType.ERROR_MESSAGE);
+			displayProgressBar(false, null, null);
+		}		 
+      
+      displayProgressBar(true, "Loading Data...", "Loading Data");
+      startJProgressThread0("Search","getTimePointData");
+
+		//This segment is for displaying the results
+      try {
+    	  String var = variable;
+    	  int[] time = new int[] {timePoint};
+    	  IJDataList tpd = vcellHelper.getTimePointData(theCacheKey,var,VCellHelper.VARTYPE_POSTPROC.NotPostProcess,time,0);
+    	  double[] data = tpd.ijData[0].getDoubleData();
+    	  BasicStackDimensions bsd = tpd.ijData[0].stackInfo;
+    	  System.out.println(bsd.xsize+" "+bsd.ysize);
+    	  ArrayImg<DoubleType, DoubleArray> testimg = ArrayImgs.doubles( data, bsd.xsize,bsd.ysize);
+    	  uiService.show(testimg);
+    	  
+    	  displayProgressBar(false, null, null);
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+//		e.printStackTrace();
+		uiService.showDialog("theCacheKey,var,VCellHelper.VARTYPE_POSTPROC.NotPostProcess,time,0\n"+e.getMessage(), "getTimePoint(...) failed", MessageType.ERROR_MESSAGE);
+		displayProgressBar(false, null, null);
+
+	}
+      startJProgressThread0("getTimePointData",null);
+	}
 }

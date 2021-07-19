@@ -72,8 +72,8 @@ public class ModelLoad_Analyse extends ContextCommand {
 	//displayProgressBar(false, null, null);
 
 //These are the Parameters for our GUI which will be the model information for the generation of the output image
-	//This dimensions of our GUI is generated automatically according to the amount of information 
-	
+	//The dimensions of our GUI is generated automatically according to the number of information 
+
 	@Parameter
 	private UIService uiService;
 
@@ -116,17 +116,10 @@ public class ModelLoad_Analyse extends ContextCommand {
     public static void main(final String... args) throws Exception {
         // create the ImageJ application context with all available services
     	
-
-    	
+ 
         final ImageJ ij = new ImageJ();
         ij.ui().showUI();
     }
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
 
     //These are for showing the progress in loading the result images after clicking OK on the GUI with the required information
 

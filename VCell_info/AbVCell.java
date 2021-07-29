@@ -111,11 +111,19 @@ public class AbVCell extends JFrame
                 }
             }
         }); 
+        
+		
+		  JButton help = new JButton("VCell Help"); help.addActionListener(new
+		  ActionListener() { public void actionPerformed(ActionEvent e) {
+		  
+		  AbVCell_Help jf2 = new AbVCell_Help(); jf2.show(); } });
+		 
         panel.add(site);
         panel.add(forums);
         panel.add(permission);
         panel.add(publish);
         panel.add(support);
+        panel.add(help);
 
     }
 

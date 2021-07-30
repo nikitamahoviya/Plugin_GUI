@@ -81,5 +81,4 @@ public class TextHelp implements Command, Previewable {
 		// TODO Auto-generated method stub
 		
 	}
-
 }

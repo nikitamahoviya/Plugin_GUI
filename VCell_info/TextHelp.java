@@ -145,23 +145,19 @@ public class TextHelp implements Command, Previewable {
 			return dim;
 		}
 	};
-	try {
-       buttonWebsite.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-               
-                try {
-                   
-                    String myurl = "https://vcell.org/";
-                   
-                    java.awt.Desktop.getDesktop().browse(java.net.URI.create(myurl));
-                   
-                } catch (Exception e2) {
-                    // TODO: handle exception
-                    e2.printStackTrace();
-                }
-            }
-        }); 
-	}
+		/*
+	 * try { buttonWebsite.addActionListener(new ActionListener() { public void
+	 * actionPerformed(ActionEvent e) {
+	 * 
+	 * try {
+	 * 
+	 * String myurl = "https://vcell.org/";
+	 * 
+	 * java.awt.Desktop.getDesktop().browse(java.net.URI.create(myurl));
+	 * 
+	 * } catch (Exception e2) { // TODO: handle exception e2.printStackTrace(); } }
+	 * }); }
+	 */
 	@Override
 	public void preview() {
 		// TODO Auto-generated method stub

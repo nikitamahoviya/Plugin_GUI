@@ -52,7 +52,7 @@ For designing the menu structure, I referred [ClearRecent.java](https://github.c
 - The **hierarchy** or the serial order in which the plugin should appear
 - The **short-cut keys** to access the plugin with keyboard
 
-Taking the example of 
+Taking the example of [
 
 
 

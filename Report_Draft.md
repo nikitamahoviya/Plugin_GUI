@@ -43,6 +43,17 @@ The project was basically to design a menu structure that could give us options 
 
 So in this menu structure, we have Plugins that have various options like VCell Plugins and VCell Help which in turn have a list of functionalities to offer.
 
+#### Designing the menu structure
+
+For designing the menu structure, I referred [ClearRecent.java](https://github.com/scijava/scijava-plugins-commands/blob/35790dea3819a7e46b3741abc179505d56e84a17/src/main/java/org/scijava/plugins/commands/io/ClearRecent.java) which included:
+
+- The **Header** under which the plugin will be placed
+- The **icon image** to clarify the purpose and make the plugin stand out
+- The **hierarchy** or the serial order in which the plugin should appear
+- The **short-cut keys** to access the plugin with keyboard
+
+Taking the example of 
+
 
 
 #### [VCell-Plugins](https://github.com/nikitamahoviya/Plugins_VCell-ImageJ/tree/main/VCell-Plugins)
@@ -50,6 +61,8 @@ So in this menu structure, we have Plugins that have various options like VCell 
 
 
 The VCell Plugins has a drop-down list of Plugins that are in communication with VCell:
+
+
 
 [**Line Plot**](https://github.com/nikitamahoviya/Plugins_VCell-ImageJ/blob/main/VCell-Plugins/LinePlot.java) - The Groovy script [chart.groovy](https://github.com/virtualcell/vcell/blob/master/vcell-imagej-helper/chart.groovy) is converted into a Java plugin which results in 2 plots
 - Line Plot by Time
@@ -69,9 +82,9 @@ I designed VCell Help with an objective that it could be resourceful to future u
 
 - [**VCell ImageJ Groovy Scripts**](https://github.com/nikitamahoviya/Plugins_VCell-ImageJ/blob/main/VCell-Help/Groovy_Reference.java) - This plugin opens into a GUI that gives information about running the various groovy scripts in Macros and also directs the user to various scripts on Github
 
-- [**VCell ImageJ Template**](https://github.com/nikitamahoviya/Plugins_VCell-ImageJ/blob/main/VCell-Help/Template.java) - This plugin is not related to any functionality but is a reference for future developers which might help them in making their own plugins It has various commands for text editing, adding buttons, browsing files, etc
+- [**VCell ImageJ Template**](https://github.com/nikitamahoviya/Plugins_VCell-ImageJ/blob/main/VCell-Help/Template.java) - This plugin is not related to any functionality but is a reference for future developers which might help them in making their own plugins It has various commands for text editing, adding buttons, browsing files, etc. Some of the features I had referred from [WidgetDemo.java](https://github.com/imagej/tutorials/blob/d3ff8e818bb26cb4713371878b239b36cb7d4877/howtos/src/main/java/howto/ui/WidgetDemo.java) 
 
-- [**VCell ImageJ Template Example**](https://github.com/nikitamahoviya/Plugins_VCell-ImageJ/blob/main/VCell-Help/Template.java) - This plugin is another template that is functional and tells how we can implement various elements in a GUI which can run as a plugin.
+- [**VCell ImageJ Template Example**](https://github.com/nikitamahoviya/Plugins_VCell-ImageJ/blob/main/VCell-Help/Template.java) - This plugin is another template that is functional and tells how we can implement various elements in a GUI which can run as a plugin. 
 
 ## For Future Reference
 

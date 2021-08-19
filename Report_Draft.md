@@ -43,17 +43,33 @@ The project was basically to design a menu structure that could give us options 
 
 So in this menu structure, we have Plugins that have various options like VCell Plugins and VCell Help which in turn have a list of functionalities to offer.
 
-#### Designing the menu structure
+### Designing the menu structure
 
-For designing the menu structure, I referred [ClearRecent.java](https://github.com/scijava/scijava-plugins-commands/blob/35790dea3819a7e46b3741abc179505d56e84a17/src/main/java/org/scijava/plugins/commands/io/ClearRecent.java) which included:
+For designing the menu structure, I referred [ClearRecent.java](https://github.com/scijava/scijava-plugins-commands/blob/35790dea3819a7e46b3741abc179505d56e84a17/src/main/java/org/scijava/plugins/commands/io/ClearRecent.java) and the code is 
+
+![image](https://user-images.githubusercontent.com/43717626/130117103-37f81749-0c13-4cb6-8106-39a037d57216.png)
+
+Which signifies:
 
 - The **Header** under which the plugin will be placed
 - The **icon image** to clarify the purpose and make the plugin stand out
 - The **hierarchy** or the serial order in which the plugin should appear
 - The **short-cut keys** to access the plugin with keyboard
 
-Taking the example of [
+Taking the example of [VCellPlugin.java](https://github.com/virtualcell/vcell/blob/master/vcell-imagej-helper/src/main/java/org/vcell/imagej/plugin/VCellPlugin.java)
+The structure is designed as follows:
 
+![image](https://user-images.githubusercontent.com/43717626/130122480-3c6d95b0-2cdc-47b4-b7f9-fc436a7d9ba7.png)
+
+- **label = "VCell Plugins"** is the submenu of Plugins which has various other plugins with various functionality
+- **iconPath="search_icon.gif"** is for assigning an icon image to the plugin
+- **weight = 4** assigns a priority to submenu VCell Plugins and seperates it from other available options with a line.
+- **mnemonic = 'V'** helps the user to access VCell Plugins with keyboard by pressing the key 'v'. it is represented by an underline on 'V' Of VCell Plugins
+- **label = "VCell Model Search"** is for accessing the the plugin named VCell Model Search inside the VCell Plugins Submenu
+- **weight = RecentFileService.MAX_FILES_SHOWN + 10** is for assigning the hierachy to the plugin inside the list of the submenu
+- **mnemonic = 'm'** helps the user to access the plugin VCell Model Search with keyboard by pressing the key 'm'. it is represented by an underline on 'M' Of VCell Model Search
+- **accelerator = "^M"** is another way to access the plugin VCell Model Search through keyboard by pressing a combination of Ctrl and M. This is indicated on the side of the Plugin name.
+- **label = "VCell Model Search "** is for naming the GUI of the result obtained after simulation
 
 
 #### [VCell-Plugins](https://github.com/nikitamahoviya/Plugins_VCell-ImageJ/tree/main/VCell-Plugins)
@@ -62,7 +78,7 @@ Taking the example of [
 
 The VCell Plugins has a drop-down list of Plugins that are in communication with VCell:
 
-
+![image](https://user-images.githubusercontent.com/43717626/130122480-3c6d95b0-2cdc-47b4-b7f9-fc436a7d9ba7.png)
 
 [**Line Plot**](https://github.com/nikitamahoviya/Plugins_VCell-ImageJ/blob/main/VCell-Plugins/LinePlot.java) - The Groovy script [chart.groovy](https://github.com/virtualcell/vcell/blob/master/vcell-imagej-helper/chart.groovy) is converted into a Java plugin which results in 2 plots
 - Line Plot by Time
@@ -74,6 +90,7 @@ It takes up data like, ModelType, VCell User ID, VCell User Name, Application, S
 
 #### [VCell-Help](https://github.com/nikitamahoviya/Plugins_VCell-ImageJ/tree/main/VCell-Help)
 
+![image](https://user-images.githubusercontent.com/43717626/130123524-dfcecac3-9e4f-438d-8623-443331baca45.png)
 
 
 I designed VCell Help with an objective that it could be resourceful to future users and developers. If someone wants to create plugins out of some Groovy scripts then they may refer to these as how elements are added to a GUI and make them functional.
@@ -82,7 +99,7 @@ I designed VCell Help with an objective that it could be resourceful to future u
 
 - [**VCell ImageJ Groovy Scripts**](https://github.com/nikitamahoviya/Plugins_VCell-ImageJ/blob/main/VCell-Help/Groovy_Reference.java) - This plugin opens into a GUI that gives information about running the various groovy scripts in Macros and also directs the user to various scripts on Github
 
-- [**VCell ImageJ Template**](https://github.com/nikitamahoviya/Plugins_VCell-ImageJ/blob/main/VCell-Help/Template.java) - This plugin is not related to any functionality but is a reference for future developers which might help them in making their own plugins It has various commands for text editing, adding buttons, browsing files, etc. Some of the features I had referred from [WidgetDemo.java](https://github.com/imagej/tutorials/blob/d3ff8e818bb26cb4713371878b239b36cb7d4877/howtos/src/main/java/howto/ui/WidgetDemo.java) 
+- [**VCell ImageJ Template**](https://github.com/nikitamahoviya/Plugins_VCell-ImageJ/blob/main/VCell-Help/Template.java) - This plugin is not related to any functionality but is extremely useful as a reference for future developers which might help them in making their own plugins. It has various commands for text editing, adding buttons, browsing files, etc. Some of the features I had referred from [WidgetDemo.java](https://github.com/imagej/tutorials/blob/d3ff8e818bb26cb4713371878b239b36cb7d4877/howtos/src/main/java/howto/ui/WidgetDemo.java) 
 
 - [**VCell ImageJ Template Example**](https://github.com/nikitamahoviya/Plugins_VCell-ImageJ/blob/main/VCell-Help/Template.java) - This plugin is another template that is functional and tells how we can implement various elements in a GUI which can run as a plugin. 
 
